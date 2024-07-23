@@ -11,15 +11,11 @@ pipeline {
           }
 
 
-stage("Compile") {
-               steps {
-                    sh "./gradlew compileJava"
-               }
-          }
-
-
-          
-
+stage("Check Java") {
+            steps {
+                sh "java -version"
+            }
+        }
          
           
      }
