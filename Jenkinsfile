@@ -1,36 +1,35 @@
 pipeline {
      agent any
-     
+
      stages {
+          stage('Checkout') {
+                         steps {
+                              git url:'https://github.com/harrylog/calculator', branch:'master'
+                         }
+          }
 
+          stage('Check Java') {
+                    steps {
+                         sh 'java -version'
+                    }
+          }
 
- stage("Checkout") {
+          stage('Compile') {
                steps {
-                    git url:'https://github.com/harrylog/calculator',branch:'master'
+                    sh './gradlew compileJava'
+               }
+          }
+          stage('Unit test') {
+               steps {
+                    sh './gradlew test'
                }
           }
 
-
-stage("Check Java") {
-            steps {
-                sh "java -version"
-            }
-        }
-
-        stage("Compile") {
+          stage('Code coverage') {
                steps {
-                    sh "./gradlew compileJava"
+                    sh './gradlew jacocoTestReport'
+                    sh './gradlew jacocoTestCoverageVerification'
                }
           }
-          stage("Unit test") {
-               steps {
-                    sh "./gradlew test"
-               }
-          }
-         
-          
      }
-
-
-     
 }
