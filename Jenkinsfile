@@ -29,26 +29,7 @@ pipeline {
                steps {
                     sh './gradlew jacocoTestReport'
                     sh './gradlew jacocoTestCoverageVerification'
-                    jacoco(
-                         execPattern: '**/build/jacoco/*.exec',
-                         classPattern: '**/build/classes/java/main',
-                         sourcePattern: '**/src/main/java',
-                         exclusionPattern: '**/test/**'
-                    )
                }
-          }
-     }
-
-     post {
-          always {
-               publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/jacoco/test/html',
-                    reportFiles: 'index.html',
-                    reportName: 'JaCoCo Coverage Report'
-               ])
           }
      }
 }
